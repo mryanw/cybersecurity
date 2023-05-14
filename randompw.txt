@@ -1,0 +1,15 @@
+#!/usr/bin/python3
+# Random password generator for strong, secure passwords!
+
+import random
+import string
+import sys
+pass_length = sys.argv[1]
+
+def generate_random_string(pass_length):
+    letters = string.ascii_letters + string.digits + string.punctuation
+    random_string = ''.join(random.choice(letters) for i in range(int(pass_length)))
+    return random_string
+
+random_string = generate_random_string(pass_length)
+print(random_string)
