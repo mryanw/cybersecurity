@@ -1,0 +1,32 @@
+#!/usr/bin/python3
+# scrape the names of the 100 projects from Replit
+
+import requests
+from bs4 import BeautifulSoup
+import csv
+
+#make request
+page = requests.get('https://replit.com/learn/100-days-of-python') 
+soup = BeautifulSoup(page.content, 'html.parser')
+
+#create all_titles as empty list
+all_titles = []
+
+#extract and store in all_titles according to instructions on the left
+titles = soup.select('div.css-7rldpb') 
+for title in titles:
+    day = title.select('span')[0].text.strip() 
+    project = title.select('p')[0].text.strip() 
+
+    all_titles.append({
+        "Day": day,
+        "Project": project
+    })
+
+
+keys = all_titles[0].keys()
+
+with open('replit.csv', 'w', newline='') as output_file:
+    dict_writer = csv.DictWriter(output_file, keys)
+    dict_writer.writeheader()
+    dict_writer.writerows(all_titles)
