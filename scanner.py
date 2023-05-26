@@ -1,4 +1,4 @@
-#!/bin/python3
+!/bin/python3
 
 import sys
 import socket
@@ -7,7 +7,7 @@ from datetime import datetime
 # add some input validation for the ip address argument
 def validate_ip_address(ip_address):
 	try:
-		socket.inet_aton(sys.argv[1])
+		socket.inet_aton(ip_address)
 		return True
 	except socket.error:
 		return False
@@ -20,9 +20,9 @@ else:
 	print("Syntax: python3 scanner.py <ip>")
 	exit()
 
-# define target
+# determine if ip address is valid and define target
 if validate_ip_address(ip_address):
-	target = socket.gethostbyname(ip_address) #translate hostname to ipv4
+	target = ip_address
 else:
 	print("Not a valid IP address")
 	exit()
@@ -46,10 +46,6 @@ except KeyboardInterrupt:
 	print("\nExiting program.")
 	sys.exit()
 
-except socket.gaierror:
-	print("Hostname could not be resolved.")
-	sys.exit()
-	
 except socket.error:
 	print("Could not connect to the server.")
 	sys.exit()
